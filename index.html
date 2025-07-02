@@ -1,108 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" />
+
     <style>
-        body{
-            margin-top: 70px;
-            background: #333;
+        body {
+            margin-top: 60px;
+            background: #222;
             color: #fff;
         }
+        .card h4 {
+            margin-bottom: 0.5rem;
+        }
+        .form-select,
+        .form-control {
+            border-radius: 20;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .input-row .unit-select {
+            flex: 0 0 35%;
+        }
+        .input-row .weight-input {
+            flex: 1;
+        }
+        .card {
+            border: none;
+        }
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+		.zoom-out-hover {
+			transition: transform 0.3s ease;
+		}
+
+		.zoom-out-hover:hover {
+			transform: scale(0.95);
+		}
+
     </style>
+
     <title>Weight Converter</title>
 </head>
-<!-- <body class="bg-dark mt-3 text-white"> could also be used -->
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h1 class="display-4 text-center mb-3">
-                    Weight Converter
-                </h1>
-                <form>
-                    <div class="form-group ">
-                        <!-- weight can't be negative.So I have set constrains: minimum number value=0 -->
-                        <!-- 
-                        normally for type=number -> only int is valid input
-                            
-                        to take floating numbers as input: type=number & step=any; 
-                        click arrow: increase/decrease value 1
+            <div class="col-md-8 col-lg-6">
+                <h1 class="text-center mb-4 display-5 zoom-out-hover">Weight Converter</h1>
 
-                        if set: step=0.01 for clicking arrow: increase/decrease value: 0.01
-                        -->
-                        <input 
-                        id="lbsInput"
-                        type="number"
-                        step="any"
-                        min="0"
-                        class="form-control form-control-lg" 
-                        placeholder="Enter Pounds...">
+                <form>
+                    <!-- Custom Row: Unit (35%) + Input (65%) -->
+                    <div class="input-row mb-4">
+                        <select id="unitSelect" class="form-select form-select-lg unit-select">
+                            <option value="lbs" selected>Pounds (lbs)</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="oz">Ounces (oz)</option>
+                        </select>
+                        <input
+                            id="weightInput"
+                            type="number"
+                            step="any"
+                            min="0"
+                            class="form-control form-control-lg weight-input"
+                            placeholder="Enter weight..." />
                     </div>
-                    <!-- End form-group -->
+
+                    <!-- Output Section -->
                     <div id="output">
-                        <!-- bs4: card-primary 
-                            bs5:it don't exist 
-                            hence use: bg-primary -->            
-                        <div class="card bg-primary mb-2 mt-2">
-                            <div class="card-body">
-                                <!-- bs4: card-block  bs5:card-body -->
+                        <div class="card bg-primary text-white mb-3">
+                            <div class="card-body zoom-out-hover">
                                 <h4>Grams:</h4>
                                 <div id="gramsOutput"></div>
                             </div>
                         </div>
-                        <!-- end card -->
 
-                        <div class="card bg-success mb-2">
-                            <div class="card-body">
+                        <div class="card bg-secondary text-white mb-3">
+                            <div class="card-body zoom-out-hover">
                                 <h4>Kilograms:</h4>
                                 <div id="kgOutput"></div>
                             </div>
                         </div>
-                        <!-- end card -->
 
-                        <div class="card bg-danger mb-2">
-                            <div class="card-body">
+                        <div class="card bg-success text-white mb-3">
+                            <div class="card-body zoom-out-hover">
+                                <h4>Pounds:</h4>
+                                <div id="lbsOutput"></div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-danger text-white mb-3">
+                            <div class="card-body zoom-out-hover">
                                 <h4>Ounces:</h4>
                                 <div id="ozOutput"></div>
                             </div>
                         </div>
-                        <!-- end card -->
                     </div>
-                    <!-- End output -->
                 </form>
             </div>
-            <!-- end col-md-6 -->
         </div>
-        <!-- end row -->
     </div>
-    <!-- end container -->
 
+    <!-- Footer -->
+    <footer class="py-5 px-lg-5 bg-dark">
+        <div class="container text-white">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-auto">
+                    <p class="zoom-out-hover mb-0">
+                        Designed by <a href="https://tanvirsweb.github.io/" class="fw-bold text-white">Tanvir Anjom Siddique</a>
+                    </p>
+                </div>
+                <div class="col-auto">
+                    <div class="social-icons d-flex gap-3">
+                        <a class="zoom-out-hover text-white" href="mailto:tanvir.anjom.siddique@gmail.com"><i class="lar la-envelope"></i></a>
+                        <a target="_blank" class="zoom-out-hover text-white" href="https://www.facebook.com/tanviranjomsiddique.alvi"><i class="lab la-facebook"></i></a>
+                        <a target="_blank" class="zoom-out-hover text-white" href="https://www.linkedin.com/in/tanvir-anjom-siddique-50028a205"><i class="lab la-linkedin"></i></a>
+                        <a target="_blank" class="zoom-out-hover text-white" href="https://www.coursera.org/user/68c3b690076eb7a16bc673208dfcaf34"><i class="lab la-dribbble"></i></a>
+                        <a target="_blank" class="zoom-out-hover text-white" href="https://github.com/tanvirsweb/"><i class="lab la-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
     <script>
-        document.getElementById('output').style.visibility='hidden';
+        document.getElementById("output").style.visibility = "hidden";
 
-        document.getElementById('lbsInput').addEventListener('input',function(event){            
-            let lbs=event.target.value;
-            // weight can't be negative
-            if(lbs>=0){
-                // if there is valid input display output (set it visible)
-                document.getElementById('output').style.visibility='visible';
-                //convert pound to other units and display them
-                document.getElementById('gramsOutput').innerHTML=lbs/0.0022046;
-                document.getElementById('kgOutput').innerHTML=lbs/2.2046;
-                document.getElementById('ozOutput').innerHTML=lbs*16;
+        const weightInput = document.getElementById("weightInput");
+        const unitSelect = document.getElementById("unitSelect");
+
+        weightInput.addEventListener("input", convertWeight);
+        unitSelect.addEventListener("change", convertWeight);
+
+        function convertWeight() {
+            const inputVal = parseFloat(weightInput.value);
+            const unit = unitSelect.value;
+
+            if (isNaN(inputVal) || inputVal < 0) {
+                document.getElementById("output").style.visibility = "hidden";
+                return;
             }
-            else{
-                document.getElementById('output').style.visibility='hidden';
+
+            let lbs, grams, kg, oz;
+
+            switch (unit) {
+                case "lbs":
+                    lbs = inputVal;
+                    grams = lbs / 0.0022046;
+                    kg = lbs / 2.2046;
+                    oz = lbs * 16;
+                    break;
+                case "kg":
+                    kg = inputVal;
+                    lbs = kg * 2.2046;
+                    grams = kg * 1000;
+                    oz = lbs * 16;
+                    break;
+                case "g":
+                    grams = inputVal;
+                    kg = grams / 1000;
+                    lbs = grams * 0.0022046;
+                    oz = lbs * 16;
+                    break;
+                case "oz":
+                    oz = inputVal;
+                    lbs = oz / 16;
+                    grams = lbs / 0.0022046;
+                    kg = lbs / 2.2046;
+                    break;
             }
-        });
+
+            document.getElementById("output").style.visibility = "visible";
+			var round = 6;
+            document.getElementById("gramsOutput").innerHTML = grams.toFixed(round);
+            document.getElementById("kgOutput").innerHTML = kg.toFixed(round);
+            document.getElementById("lbsOutput").innerHTML = lbs.toFixed(round);
+            document.getElementById("ozOutput").innerHTML = oz.toFixed(round);
+        }
     </script>
-    <!-- <div class="container text-center text-light bg-primary">Copyright @copy Tanvir Anjom Siddique</div> -->
-    
 </body>
 </html>
